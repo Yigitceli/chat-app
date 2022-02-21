@@ -78,7 +78,7 @@ export default function Login() {
               to={"/register"}
               className="cursor-pointer hover:text-white underline underline-offset-1 text-blue-500"
             >
-              Sign In
+              Sign Up
             </Link>
           </p>
         </form>
