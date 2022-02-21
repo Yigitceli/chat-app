@@ -1,5 +1,4 @@
 import React from "react";
-import './formInput.css';
 interface IProps {
   name: string;
   type: string;
