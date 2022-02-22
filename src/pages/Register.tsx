@@ -34,6 +34,7 @@ export default function Register() {
         <h1 className="w-full text-center text-white tracking-widte text-5xl leading-relaxed">
           Be In Touch With Everyone!
         </h1>
+        
         <div className="w-full lg:my-10 my-1"></div>
         <h1 className="w-full text-center text-white tracking-widte text-5xl leading-relaxed">
           Share Every Moment With Your Friends!
