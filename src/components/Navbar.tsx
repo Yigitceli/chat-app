@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { IoLogoSnapchat } from "react-icons/io";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form";
 import axios from "../axios";
 import SearchTab from "./SearchTab";
 import { IUserBody } from "../pages/Login";
+import { useDebounce } from "usehooks-ts";
 
 type FormValues = {
   value: string;
@@ -22,24 +23,31 @@ const withUser = ` w-full flex items-center justify-between px-5 lg:px-13 py-3 b
 const withoutUser = `w-full flex items-center justify-center px-5 lg:px-13 py-3 bg-main backdrop-blur-sm`;
 
 export default function Navbar() {
+  const [searchValue, setSearchValue] = useState<string>("");
   const [searchResult, setSearchResult] = useState<IUserBody[] | null>(null);
   const data = useSelector((state: RootState) => state.user);
-  const {
-    register,
-    handleSubmit,
-    getValues,
-    formState: { errors },
-  } = useForm<FormValues>();
 
-  const FormSubmitHandler = async () => {
+  const debouncedValue = useDebounce<string>(searchValue, 300);
+
+  const changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(event.target.value);
+  };
+
+  const fetchSearchResult = async () => {
     try {
-      const { data } = await axios.get(`/user?value=${getValues("value")}`);
+      const { data } = await axios.get(`/user?value=${searchValue}`);
       const userData: IUserBody[] | null = data.payload;
       setSearchResult(userData);
     } catch (error) {
       setSearchResult(null);
     }
   };
+
+  useEffect(() => {
+    fetchSearchResult();
+  }, [debouncedValue]);
+
+  const FormSubmitHandler = async () => {};
 
   return (
     <div className={data.data ? withUser : withoutUser}>
@@ -51,20 +59,20 @@ export default function Navbar() {
       {data.data && (
         <ul className="flex gap-8 text-stone-400 font-bold items-center">
           <div className="relative flex flex-col">
-            <form
-              onSubmit={handleSubmit(FormSubmitHandler)}
-              className="flex items-center bg-layout p-2 rounded-md "
-            >
+            <form className="flex items-center bg-layout p-2 rounded-md ">
               <input
                 type="text"
                 className="bg-main bg-layout w-36 focus:outline-none focus:bg-layout"
                 placeholder="Search"
-                {...register("value")}
+                onChange={changeHandler}
+                value={searchValue}
                 autoComplete="off"
               />
               <AiOutlineSearch className="text-secondary text-xl" />
             </form>
-            {searchResult && <SearchTab data={searchResult} setData={setSearchResult}/>}
+            {searchResult && (
+              <SearchTab data={searchResult} setData={setSearchResult} />
+            )}
           </div>
 
           <span className="relative inline-block cursor-pointer hover:text-secondary">
