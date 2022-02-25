@@ -26,7 +26,7 @@ export default function App() {
 
           <Route element={<ProtectedRouter />}>
             <Route path="/" element={<Dashboard />} />
-            <Route path="/search" element={<Search />} />
+            <Route path="/search" element={<Search />} />            
           </Route>
         </Routes>
       </div>

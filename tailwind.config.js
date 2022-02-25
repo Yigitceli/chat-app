@@ -22,6 +22,11 @@ module.exports = {
         main: "#201c1c",
         secondary: "#d8046c",
       },
+      keyframes: {
+        grow: {
+          '0%, 100%': { transform: 'scale(2,2)' },          
+        }
+      }
       
     },
   },

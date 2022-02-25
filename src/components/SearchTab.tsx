@@ -2,17 +2,21 @@ import React, { useEffect, useRef } from "react";
 import { IUserBody } from "../pages/Login";
 import { FiMoreHorizontal } from "react-icons/Fi";
 import { useOnClickOutside } from "usehooks-ts";
+import { createSearchParams, Link, useNavigate } from "react-router-dom";
 interface IProps {
   data: IUserBody[] | null;
   setData: (e: null | IUserBody[]) => void;
+  value: string;
 }
 
-const SearchTab: React.FC<IProps> = ({ data, setData }) => {
+const SearchTab: React.FC<IProps> = ({ data, setData, value }) => {
   const ref = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   const handleClickOutside = () => {
     data && setData(null);
   };
+  
 
   useOnClickOutside(ref, handleClickOutside);
 
@@ -27,9 +31,12 @@ const SearchTab: React.FC<IProps> = ({ data, setData }) => {
           <span className="">{item.displayName}</span>
         </span>
       ))}
-      <span className="w-full flex justify-center cursor-pointer rounded-md hover:bg-main">
-        <FiMoreHorizontal fontSize={24} />
-      </span>
+
+      <Link to={`/search?value=${value}`}>
+        <span className="w-full flex justify-center cursor-pointer rounded-md hover:bg-main">
+          <FiMoreHorizontal fontSize={24} />
+        </span>
+      </Link>
     </div>
   );
 };

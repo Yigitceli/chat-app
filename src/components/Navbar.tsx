@@ -14,10 +14,7 @@ import axios from "../axios";
 import SearchTab from "./SearchTab";
 import { IUserBody } from "../pages/Login";
 import { useDebounce } from "usehooks-ts";
-
-type FormValues = {
-  value: string;
-};
+import { Link, useNavigate } from "react-router-dom";
 
 const withUser = ` w-full flex items-center justify-between px-5 lg:px-13 py-3 bg-main backdrop-blur-sm`;
 const withoutUser = `w-full flex items-center justify-center px-5 lg:px-13 py-3 bg-main backdrop-blur-sm`;
@@ -26,7 +23,7 @@ export default function Navbar() {
   const [searchValue, setSearchValue] = useState<string>("");
   const [searchResult, setSearchResult] = useState<IUserBody[] | null>(null);
   const data = useSelector((state: RootState) => state.user);
-
+  const navigate = useNavigate();
   const debouncedValue = useDebounce<string>(searchValue, 250);
 
   const changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -47,19 +44,27 @@ export default function Navbar() {
     fetchSearchResult();
   }, [debouncedValue]);
 
-  const FormSubmitHandler = async () => {};
+  const FormSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    navigate(`/search?value=${searchValue}`);
+  };
 
   return (
     <div className={data.data ? withUser : withoutUser}>
-      <div className="cursor-pointer flex items-center gap-1 hover:text-stone-400 text-white">
-        <IoLogoSnapchat fontSize={35} />
-        <h3>Chatlify</h3>
-      </div>
+      <Link to={"/"}>
+        <div className="cursor-pointer flex items-center gap-1 hover:text-stone-400 text-white">
+          <IoLogoSnapchat fontSize={35} />
+          <h3>Chatlify</h3>
+        </div>
+      </Link>
 
       {data.data && (
         <ul className="flex gap-8 text-stone-400 font-bold items-center">
           <div className="relative flex flex-col">
-            <form className="flex items-center bg-layout p-2 rounded-md ">
+            <form
+              onSubmit={FormSubmitHandler}
+              className="flex items-center bg-layout p-2 rounded-md "
+            >
               <input
                 type="text"
                 className="bg-main bg-layout w-36 focus:outline-none focus:bg-layout"
@@ -71,7 +76,11 @@ export default function Navbar() {
               <AiOutlineSearch className="text-secondary text-xl" />
             </form>
             {searchResult && (
-              <SearchTab data={searchResult} setData={setSearchResult} />
+              <SearchTab
+                value={searchValue}
+                data={searchResult}
+                setData={setSearchResult}
+              />
             )}
           </div>
 
