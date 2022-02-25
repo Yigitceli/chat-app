@@ -3,9 +3,15 @@ import { FcGoogle } from "react-icons/fc";
 import { signWithGoogle, signInWithTwitter } from "../../firebaseconfig";
 import { BsTwitter } from "react-icons/bs";
 import { sendPasswordResetEmail, UserCredential } from "firebase/auth";
-import { setAccessToken, setRefreshToken } from "../services/authService";
-import { Link } from "react-router-dom";
+import {
+  getAuthType,
+  setAccessToken,
+  setRefreshToken,
+} from "../services/authService";
+import { Link, useNavigate } from "react-router-dom";
 import { get, SubmitHandler, useForm } from "react-hook-form";
+import axios from "axios";
+
 
 type FormValues = {
   email: string;
@@ -17,6 +23,7 @@ type FormValues = {
 };
 
 export default function Register() {
+ const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -24,8 +31,18 @@ export default function Register() {
     formState: { errors },
   } = useForm<FormValues>();
 
-  const FormSubmitHandler: SubmitHandler<FormValues> = (data: FormValues) => {
-    console.log(data);
+  const FormSubmitHandler: SubmitHandler<FormValues> = async (
+    data: FormValues
+  ) => {
+    const response = await axios.post("http://localhost:5000/user/register", {
+      email: data.email,
+      password: data.password,
+      name: data.name,
+      surname: data.surname,
+      authType: "custom",
+    });
+    navigate("/login")
+    
   };
 
   return (
@@ -34,7 +51,7 @@ export default function Register() {
         <h1 className="w-full text-center text-white tracking-widte text-5xl leading-relaxed">
           Be In Touch With Everyone!
         </h1>
-        
+
         <div className="w-full lg:my-10 my-1"></div>
         <h1 className="w-full text-center text-white tracking-widte text-5xl leading-relaxed">
           Share Every Moment With Your Friends!

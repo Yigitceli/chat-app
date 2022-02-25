@@ -5,9 +5,10 @@ module.exports = {
       backgroundColor: {
         main: "#201c1c",
         secondary: "#d8046c",
+        layout: "#363333",
       },
       padding: {
-        13: "130px",        
+        13: "130px",
         25: "60px",
         30: "200px",
       },
@@ -15,13 +16,15 @@ module.exports = {
         6: "60px",
       },
       width: {
-        200: "500px"
+        200: "500px",
       },
-      colors:{
+      colors: {
+        main: "#201c1c",
         secondary: "#d8046c",
-      }
+      },
       
     },
   },
   plugins: [],
 };
+

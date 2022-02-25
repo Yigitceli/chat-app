@@ -3,18 +3,34 @@ import { FcGoogle } from "react-icons/fc";
 import { signWithGoogle, signInWithTwitter } from "../../firebaseconfig";
 import { BsTwitter } from "react-icons/bs";
 import { UserCredential } from "firebase/auth";
-import { setAccessToken, setRefreshToken } from "../services/authService";
-import { Link } from "react-router-dom";
+import {
+  setAccessToken,
+  setAuthType,
+  setRefreshToken,
+} from "../services/authService";
+import { Link, useNavigate } from "react-router-dom";
 import Avatar from "react-avatar";
 import { SubmitHandler, useForm } from "react-hook-form";
+import axios from "../axios";
+import { useAppDispatch } from "../store";
+import { signInAction, userSignIn, userSignInSocial } from "../redux/userSlice";
 
 type FormValues = {
   email: string;
   password: string;
   remember: boolean;
 };
+export interface IUserBody {
+  displayName: string;
+  avatar: string;
+  email: string;
+  userId: string;
+  friends: IUserBody[];
+}
 
 export default function Login() {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -25,10 +41,9 @@ export default function Login() {
   const signIn = async (authType: string) => {
     try {
       if (authType === "google") {
-        const data: UserCredential | null = await signWithGoogle();
-        setAccessToken(await data.user.getIdToken());
-        setRefreshToken(data.user.refreshToken);
+        dispatch(userSignInSocial(authType));
       } else if (authType === "twitter") {
+        setAuthType(authType);
         const data: UserCredential | null = await signInWithTwitter();
         console.log(data);
       }
@@ -37,8 +52,18 @@ export default function Login() {
     }
   };
 
-  const FormSubmitHandler: SubmitHandler<FormValues> = (data: FormValues) => {
-    
+  const FormSubmitHandler: SubmitHandler<FormValues> = async (
+    loginData: FormValues
+  ) => {
+    try {
+      await dispatch(
+        userSignIn({
+          email: loginData.email,
+          bodyPassword: loginData.password,
+        })
+      );
+      navigate("/");
+    } catch (error) {}
   };
 
   return (

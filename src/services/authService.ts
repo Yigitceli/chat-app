@@ -12,3 +12,12 @@ export const getRefreshToken = (): string | null => {
 export const setRefreshToken = (token: string): void => {
   window.localStorage.setItem("refreshToken", token);
 };
+
+export const setAuthType = (authType: string): void => {
+  window.localStorage.setItem("authType", authType);
+};
+
+export const getAuthType = (): string | null => {
+  const authType = window.localStorage.getItem("authType");
+  return authType;
+};
