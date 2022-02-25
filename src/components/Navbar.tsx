@@ -27,7 +27,7 @@ export default function Navbar() {
   const [searchResult, setSearchResult] = useState<IUserBody[] | null>(null);
   const data = useSelector((state: RootState) => state.user);
 
-  const debouncedValue = useDebounce<string>(searchValue, 300);
+  const debouncedValue = useDebounce<string>(searchValue, 250);
 
   const changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
