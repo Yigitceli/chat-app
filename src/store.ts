@@ -3,6 +3,7 @@ import storage from "redux-persist/lib/storage";
 import { useDispatch } from "react-redux";
 import userSlice from "./redux/userSlice";
 import { persistReducer } from "redux-persist";
+import searchSlice from "./redux/searchSlice";
 
 const persistConfig = {
   key: "user",
@@ -14,6 +15,7 @@ const persistedReducer = persistReducer(persistConfig, userSlice);
 const store = configureStore({
   reducer: {
     user: persistedReducer,
+    search: searchSlice
   },
 });
 export type RootState = ReturnType<typeof store.getState>;

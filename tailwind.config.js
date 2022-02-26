@@ -14,6 +14,7 @@ module.exports = {
       },
       height: {
         6: "60px",
+        600: "200px",
       },
       width: {
         200: "500px",
@@ -24,12 +25,10 @@ module.exports = {
       },
       keyframes: {
         grow: {
-          '0%, 100%': { transform: 'scale(2,2)' },          
-        }
-      }
-      
+          "0%, 100%": { transform: "scale(2,2)" },
+        },
+      },
     },
   },
   plugins: [],
 };
-

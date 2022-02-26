@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
+import ProfileData from "./pages/ProfileData";
 import Register from "./pages/Register";
 import Search from "./pages/Search";
 import CheckProtectRouter from "./services/CheckProtectRoute";
@@ -16,7 +17,7 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <div className="bg-main w-full h-screen flex flex-col">
+      <div className="overflow-hidden bg-main w-full h-screen flex flex-col">
         <Navbar />
         <Routes>
           <Route element={<CheckProtectRouter />}>
@@ -26,7 +27,8 @@ export default function App() {
 
           <Route element={<ProtectedRouter />}>
             <Route path="/" element={<Dashboard />} />
-            <Route path="/search" element={<Search />} />            
+            <Route path="/search" element={<Search />} />   
+            <Route path="/user/:id" element={<ProfileData/>}/>      
           </Route>
         </Routes>
       </div>

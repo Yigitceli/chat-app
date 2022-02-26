@@ -4,7 +4,7 @@ import { AiOutlineSearch } from "react-icons/ai";
 const Dashboard = () => {
   return (
     <>
-      <div className="w-2/4  h-full border-r-2 border-main p-3">
+      <div className="w-2/4 h-full border-r-2 border-main p-3">
         <h2 className="text-2xl text-white font-bold w-full flex justify-center items-center">
           Hidayet
         </h2>

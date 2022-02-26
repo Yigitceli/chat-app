@@ -25,7 +25,7 @@ export interface IUserBody {
   avatar: string;
   email: string;
   userId: string;
-  friends: IUserBody[];
+  friends: IUserBody[] | [];
 }
 
 export default function Login() {
