@@ -1,12 +1,17 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { IoLogoSnapchat } from "react-icons/io";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
 import { signWithGoogle, signInWithTwitter } from "../../firebaseconfig";
 import { BsTwitter } from "react-icons/bs";
-import { UserCredential } from "firebase/auth";
-import { setAccessToken, setRefreshToken } from "../services/authService";
-import { useSelector } from "react-redux";
+import { getAuth, UserCredential } from "firebase/auth";
+import {
+  getAuthType,
+  setAccessToken,
+  setRefreshToken,
+  signout,
+} from "../services/authService";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
 import { RiNotification2Line } from "react-icons/Ri";
 import { useForm } from "react-hook-form";
@@ -15,16 +20,43 @@ import SearchTab from "./SearchTab";
 import { IUserBody } from "../pages/Login";
 import { useDebounce } from "usehooks-ts";
 import { Link, useNavigate } from "react-router-dom";
+import { useOnClickOutside } from "usehooks-ts";
+import { signOutAction } from "../redux/userSlice";
 
 const withUser = ` w-full flex items-center justify-between px-5 lg:px-13 py-3 bg-main backdrop-blur-sm`;
 const withoutUser = `w-full flex items-center justify-center px-5 lg:px-13 py-3 bg-main backdrop-blur-sm`;
 
 export default function Navbar() {
+  const ref = useRef(null);
   const [searchValue, setSearchValue] = useState<string>("");
   const [searchResult, setSearchResult] = useState<IUserBody[] | null>(null);
   const data = useSelector((state: RootState) => state.user);
   const navigate = useNavigate();
   const debouncedValue = useDebounce<string>(searchValue, 250);
+  const [open, setOpen] = useState<boolean>(false);
+  const dispatch = useDispatch();
+
+  const signOut = () => {
+    if (getAuthType() == "custom") {
+      signout();
+      dispatch(signOutAction());
+      navigate("/login");
+    } else {
+      signout();
+      dispatch(signOutAction());
+      getAuth().signOut();
+      navigate("/login");
+      setOpen(false);
+    }
+  };
+
+  const handleClickOutside = () => {
+    if (open == true) {
+      setOpen(false);
+    }
+  };
+
+  useOnClickOutside(ref, handleClickOutside, "mousedown");
 
   const changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
@@ -41,7 +73,9 @@ export default function Navbar() {
   };
 
   useEffect(() => {
-    fetchSearchResult();
+    if (debouncedValue) {
+      fetchSearchResult();
+    }
   }, [debouncedValue]);
 
   const FormSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
@@ -90,11 +124,39 @@ export default function Navbar() {
               99
             </span>
           </span>
-          <img
-            className="rounded-full w-11 cursor-pointer"
-            src={data.data.avatar}
-            alt="Profil Picture"
-          />
+          <div className="relative">
+            <img
+              className="rounded-full w-11 cursor-pointer hover:scale-110"
+              src={data.data.avatar}
+              alt="Profil Picture"
+              onMouseDown={() => setOpen(!open)}
+            />
+
+            {open && (
+              <div
+                ref={ref}
+                className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+              >
+                <div className="flex flex-col gap-1 w-full" role="none">
+                  <button className="flex justify-start rounded-sm w-full hover:text-white hover:bg-main text-gray-700 block px-4 py-2 text-sm">
+                    Account settings
+                  </button>
+                  <button className="flex justify-start rounded-sm w-full hover:text-white hover:bg-main text-gray-700 block px-4 py-2 text-sm">
+                    Support
+                  </button>
+                  <button className="flex justify-start rounded-sm w-full hover:text-white hover:bg-main text-gray-700 block px-4 py-2 text-sm">
+                    License
+                  </button>
+                  <button
+                    className="font-bold rounded-sm w-full hover:text-white hover:bg-main text-gray-700 block w-full text-left px-4 py-2 text-sm"
+                    onClick={signOut}
+                  >
+                    Sign out
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
         </ul>
       )}
     </div>

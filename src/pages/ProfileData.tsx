@@ -7,17 +7,39 @@ import { RootState } from "../store";
 import { useSearchParams } from "react-router-dom";
 import { fetchUser } from "../redux/searchSlice";
 import Loading from "../services/Loading";
+import { AiOutlineUserAdd } from "react-icons/ai";
+import axios from "../axios";
+import { addFriend } from "../redux/userSlice";
 
 const ProfileData: React.FC = () => {
-  const { profileData,loading } = useSelector((state: RootState) => state.search);
+  const {
+    profileData,
+    loading,
+  }: {
+    profileData: IUserBody | null;
+    loading: "idle" | "pending" | "succeeded" | "failed";
+  } = useSelector((state: RootState) => state.search);
+  const { data } = useSelector((state: RootState) => state.user);
   let [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(fetchUser(searchParams.get("id")));
   }, [searchParams]);
 
+  const handleClick = async () => {
+    const { data } = await axios.put("user/add-friend", profileData);
+    dispatch(addFriend(profileData!));    
+  };
+
   return (
-    <div className="w-full h-full lg:flex hidden">
+    <div className="w-full h-full flex text-white relative">
+      <button className="absolute top-3 right-3" onClick={handleClick}>
+        {data?.friends.some((item) => item.userId == profileData?.userId) ||
+          (profileData?.userId !== data?.userId && (
+            <AiOutlineUserAdd fontSize={28} className="hover:text-3xl" />
+          ))}
+      </button>
       <div className="text-white flex flex-col md:gap-5 gap-2 w-full p-3 items-center">
         <Loading loading={loading}>
           <h1 className="text-3xl w-100 flex justify-center">

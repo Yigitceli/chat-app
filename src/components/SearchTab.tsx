@@ -16,7 +16,10 @@ const SearchTab: React.FC<IProps> = ({ data, setData, value }) => {
   const handleClickOutside = () => {
     data && setData(null);
   };
+
+
   
+
 
   useOnClickOutside(ref, handleClickOutside);
 
@@ -26,10 +29,12 @@ const SearchTab: React.FC<IProps> = ({ data, setData, value }) => {
       className="bg-layout gap-2 flex flex-col w-full absolute rounded-md top-11 shadow-xl"
     >
       {data?.slice(0, 3).map((item) => (
-        <span className="hover:bg-main py-1 rounded-md cursor-pointer flex items-center justify-evenly w-full">
-          <img src={item.avatar} className="w-10 rounded-full" />
-          <span className="">{item.displayName}</span>
-        </span>
+        <Link to={`/user/${item.userId}`}>
+          <span className="hover:bg-main py-1 rounded-md cursor-pointer flex items-center justify-evenly w-full">
+            <img src={item.avatar} className="w-10 rounded-full" />
+            <span className="">{item.displayName}</span>
+          </span>
+        </Link>
       ))}
 
       <Link to={`/search?value=${value}`}>

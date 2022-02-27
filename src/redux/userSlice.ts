@@ -70,7 +70,7 @@ export const userSignInSocial = createAsyncThunk(
       setAuthType(authType);
 
       const response = await Axios.post("/user/login");
-      const userData: IUserBody = response.data.payload;      
+      const userData: IUserBody = response.data.payload;
       return userData;
     } catch (error) {
       console.log(error);
@@ -90,6 +90,12 @@ const userSlice = createSlice({
   reducers: {
     signInAction: (state, action: PayloadAction<IUserBody>) => {
       state.data = action.payload;
+    },
+    signOutAction: (state, action: PayloadAction<undefined>) => {
+      state.data = null;
+    },
+    addFriend: (state, action: PayloadAction<IUserBody>) => {
+      state.data?.friends.push(action.payload);
     },
   },
   extraReducers: (builder) => {
@@ -120,6 +126,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { signInAction } = userSlice.actions;
+export const { signInAction, signOutAction, addFriend } = userSlice.actions;
 // Other code such as selectors can use the imported `RootState` type
 export default userSlice.reducer;

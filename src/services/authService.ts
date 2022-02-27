@@ -21,3 +21,10 @@ export const getAuthType = (): string | null => {
   const authType = window.localStorage.getItem("authType");
   return authType;
 };
+
+export const signout = (): void => {
+  window.localStorage.removeItem("authType");
+  window.localStorage.removeItem("accessToken");
+  window.localStorage.removeItem("refreshToken");
+  window.localStorage.removeItem("persist:user");
+};

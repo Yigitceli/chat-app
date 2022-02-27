@@ -20,7 +20,7 @@ const Search = () => {
   let [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  useEffect(() => {    
     dispatch(fetchUsers(searchParams.get("value")));
   }, [searchParams]);
 
@@ -39,7 +39,7 @@ const Search = () => {
           {data.loading == "succeeded" &&
             data.data!.map((item: IUserBody) => <UserResult item={item} />)}
         </div>
-      </div>      
+      </div>
     </>
   );
 };
