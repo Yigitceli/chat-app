@@ -17,7 +17,7 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <div className="overflow-hidden bg-main w-full h-screen flex flex-col">
+      <div className="overflow-hidden relative bg-main w-full h-screen flex flex-col">
         <Navbar />
         <Routes>
           <Route element={<CheckProtectRouter />}>

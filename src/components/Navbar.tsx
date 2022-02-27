@@ -23,7 +23,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useOnClickOutside } from "usehooks-ts";
 import { signOutAction } from "../redux/userSlice";
 
-const withUser = ` w-full flex items-center justify-between px-5 lg:px-13 py-3 bg-main backdrop-blur-sm`;
+const withUser = `w-full flex items-center justify-between px-5 lg:px-13 py-3 bg-main backdrop-blur-sm`;
 const withoutUser = `w-full flex items-center justify-center px-5 lg:px-13 py-3 bg-main backdrop-blur-sm`;
 
 export default function Navbar() {
@@ -60,6 +60,7 @@ export default function Navbar() {
 
   const changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
+
   };
 
   const fetchSearchResult = async () => {
@@ -114,6 +115,7 @@ export default function Navbar() {
                 value={searchValue}
                 data={searchResult}
                 setData={setSearchResult}
+                setSearchValue={setSearchValue}
               />
             )}
           </div>

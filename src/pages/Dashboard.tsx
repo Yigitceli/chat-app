@@ -5,12 +5,12 @@ import { RootState } from "../store";
 import { IUserBody } from "./Login";
 import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from "react-icons/md";
 
-const active = "md:hidden flex w-2/4 h-full absolute items-center translate-x-[108.5%]"
-const disActive = "md:hidden flex w-2/4 h-full absolute items-center translate-x-[199%]"
+const active = "top-0 md:hidden flex h-full absolute items-center right-0"
+const disActive = "top-0 md:hidden flex  h-full absolute items-center -right-[17em]"
 
 const Dashboard = () => {
   const { data } = useSelector((state: RootState) => state.user);
-  const [isActive, setIsActive] = useState<boolean>(false)
+  const [isActive, setIsActive] = useState<boolean>(true)
 
   return (
     <>
@@ -64,7 +64,7 @@ const Dashboard = () => {
           <div className="px-3 flex flex-col gap-2 ">
             {data?.friends.map((item: IUserBody) => (
               <div className="p-2 rounded-lg w-full flex items-center gap-2 text-secondary bg-main hover:scale-110 font-bold cursor-pointer">
-                <img src={item.avatar} className="w-10 rounded-full" />{" "}
+                <img src={item.avatar} className="w-10 rounded-full" />
                 <h3>{item.displayName}</h3>
               </div>
             ))}
