@@ -20,25 +20,23 @@ const Search = () => {
   let [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
 
-  useEffect(() => {    
+  useEffect(() => {
     dispatch(fetchUsers(searchParams.get("value")));
   }, [searchParams]);
 
   return (
     <>
-      <div className="overflow-y-hidden lg:w-2/4  h-full border-r-2 border-main p-3 w-3/4">
-        <div className="text-white text-4xl flex w-full justify-between items-center">
-          <CgLayoutList cursor={"pointer"} className="hover:scale-125" />
-          <h2 className="text-2xl text-white font-bold w-full flex justify-center items-center">
-            Search Results
-          </h2>
-          <CgLayoutGridSmall cursor={"pointer"} className="hover:scale-125" />
-        </div>
+      <div className="text-white text-4xl flex w-full justify-between items-center">
+        <CgLayoutList cursor={"pointer"} className="hover:scale-125" />
+        <h2 className="text-2xl text-white font-bold w-full flex justify-center items-center">
+          Search Results
+        </h2>
+        <CgLayoutGridSmall cursor={"pointer"} className="hover:scale-125" />
+      </div>
 
-        <div className="overflow-y-auto h-full flex flex-col md:py-2 md:px-1 p-2 gap-4 w-full bg-layout">
-          {data.loading == "succeeded" &&
-            data.data!.map((item: IUserBody) => <UserResult item={item} />)}
-        </div>
+      <div className="overflow-y-auto h-full flex flex-col md:py-2 md:px-1 p-2 gap-4 w-full">
+        {data.loading == "succeeded" &&
+          data.data!.map((item: IUserBody) => <UserResult item={item} />)}
       </div>
     </>
   );

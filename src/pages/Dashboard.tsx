@@ -3,21 +3,25 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import { IUserBody } from "./Login";
-import { MdOutlineArrowBackIos, MdOutlineArrowForwardIos } from "react-icons/md";
+import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
+import {
+  MdOutlineArrowBackIos,
+  MdOutlineArrowForwardIos,
+} from "react-icons/md";
+import Search from "./Search";
 
-const active = "top-0 md:hidden flex h-full absolute items-center right-0"
-const disActive = "top-0 md:hidden flex  h-full absolute items-center -right-[17em]"
+const active = "top-0 md:hidden flex h-full absolute items-center right-0";
+const disActive =
+  "top-0 md:hidden flex  h-full absolute items-center -right-[17em]";
 
 const Dashboard = () => {
   const { data } = useSelector((state: RootState) => state.user);
-  const [isActive, setIsActive] = useState<boolean>(true)
+  const [isActive, setIsActive] = useState<boolean>(true);
 
   return (
     <>
       <div className="w-4/6 md:w2/4 rounded-tr-md rounded-br-md md:rounded-none h-full border-r-2 border-main p-3 bg-layout">
-        <h2 className="text-2xl text-white font-bold w-full flex justify-center items-center">
-          Hidayet
-        </h2>
+        <Outlet />
       </div>
       <div className="hidden md:flex flex-col w-1/4 h-full bg-layout rounded-tr-md rounded-br-md">
         <div className="text-white flex gap-2 items-center w-full justify-evenly p-3">
@@ -42,15 +46,19 @@ const Dashboard = () => {
       {/* Mobile */}
 
       <div className={isActive ? active : disActive}>
-        {!isActive ? <MdOutlineArrowBackIos
-          className="cursor-pointer text-secondary rounded-tl-2xl rounded-bl-2xl"          
-          fontSize={28}
-          onClick={() => setIsActive(!isActive)}          
-        /> :<MdOutlineArrowForwardIos
-        className="cursor-pointer text-secondary rounded-tl-2xl rounded-bl-2xl"          
-        fontSize={28}
-        onClick={() => setIsActive(!isActive)}          
-      /> }
+        {!isActive ? (
+          <MdOutlineArrowBackIos
+            className="cursor-pointer text-secondary rounded-tl-2xl rounded-bl-2xl"
+            fontSize={28}
+            onClick={() => setIsActive(!isActive)}
+          />
+        ) : (
+          <MdOutlineArrowForwardIos
+            className="cursor-pointer text-secondary rounded-tl-2xl rounded-bl-2xl"
+            fontSize={28}
+            onClick={() => setIsActive(!isActive)}
+          />
+        )}
         <div className="border-2 border-main bg-layout md:static md:rounded-tr-md rounded-br-md  h-full">
           <div className="text-white flex gap-2 items-center w-full justify-evenly p-3">
             <input

@@ -25,7 +25,8 @@ const SearchTab: React.FC<IProps> = ({ data, setData, value, setSearchValue }) =
     <div
       ref={ref}
       className="bg-layout absolute z-50 gap-2 flex flex-col w-full rounded-md top-11 shadow-xl"
-    >
+      
+   >
       {data?.slice(0, 3).map((item) => (
         <Link to={`/user/${item.userId}`}>
           <span className="relative hover:bg-main py-1 rounded-md cursor-pointer flex items-center justify-evenly w-full">

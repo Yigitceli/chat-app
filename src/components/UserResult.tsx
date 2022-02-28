@@ -21,7 +21,8 @@ const UserResult: React.FC<IProps> = ({ item }) => {
       <Link to={`/user/${item.userId}`}>
         <div
           onClick={(e) => dispatch(setProfileData(item))}
-          className="hover:scale-95 cursor-pointer text-white w-full rounded-lg drop-shadow-sm p-4 bg-main flex justify-between items-center h-28"
+          className="hover:scale-95 cursor-pointer text-white w-full rounded-lg p-4 bg-main flex justify-between items-center h-28"
+         
         >
           <img src={item.avatar} className="w-24 rounded-full" />
           <div className="flex flex-col items-center">

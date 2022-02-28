@@ -26,9 +26,19 @@ export default function App() {
           </Route>
 
           <Route element={<ProtectedRouter />}>
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/search" element={<Search />} />   
-            <Route path="/user/:id" element={<ProfileData/>}/>      
+            <Route path="/" element={<Dashboard />}>
+              <Route
+                path="/"
+                element={
+                  <h2 className="text-2xl text-white font-bold w-full flex justify-center items-center">
+                    Hidayet
+                  </h2>
+                }
+              />
+              <Route path="/search" element={<Search />} />
+              <Route path="/user/:id" element={<ProfileData />} />
+            </Route>
+           
           </Route>
         </Routes>
       </div>

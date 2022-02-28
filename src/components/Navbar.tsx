@@ -82,6 +82,7 @@ export default function Navbar() {
   const FormSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     navigate(`/search?value=${searchValue}`);
+    setSearchResult(null);
   };
 
   return (
