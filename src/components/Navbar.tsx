@@ -23,7 +23,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useOnClickOutside } from "usehooks-ts";
 import { signOutAction } from "../redux/userSlice";
 
-const withUser = `w-full flex items-center justify-between px-5 lg:px-13 py-3 bg-main backdrop-blur-sm`;
+const withUser = `relative z-50 w-full flex items-center justify-between px-5 lg:px-13 py-3 bg-main backdrop-blur-sm`;
 const withoutUser = `w-full flex items-center justify-center px-5 lg:px-13 py-3 bg-main backdrop-blur-sm`;
 
 export default function Navbar() {
@@ -138,7 +138,7 @@ export default function Navbar() {
             {open && (
               <div
                 ref={ref}
-                className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+                className="origin-top-right z-50 absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
               >
                 <div className="flex flex-col gap-1 w-full" role="none">
                   <button className="flex justify-start rounded-sm w-full hover:text-white hover:bg-main text-gray-700 block px-4 py-2 text-sm">

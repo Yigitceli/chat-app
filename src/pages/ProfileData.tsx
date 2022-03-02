@@ -4,12 +4,12 @@ import { IUserBody } from "./Login";
 import UserResult from "../components/UserResult";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { fetchUser } from "../redux/searchSlice";
 import Loading from "../services/Loading";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import axios from "../axios";
-import { addFriend } from "../redux/userSlice";
+import { BsFillChatDotsFill } from "react-icons/bs";
 
 const ProfileData: React.FC = () => {
   const {
@@ -27,21 +27,10 @@ const ProfileData: React.FC = () => {
     dispatch(fetchUser(searchParams.get("id")));
   }, [searchParams]);
 
-  const handleClick = async () => {
-    const { data } = await axios.put("user/add-friend", profileData);
-    dispatch(addFriend(profileData!));
-  };
-
   return (
     <>
       <div className="w-full h-full flex text-white relative">
-        <button className="absolute top-3 right-3" onClick={handleClick}>
-          {profileData &&
-            (data?.friends.some((item) => item.userId == profileData?.userId) ||
-              profileData?.userId !== data?.userId) && (
-              <AiOutlineUserAdd fontSize={28} className="hover:text-3xl" />
-            )}
-        </button>
+        <button className="absolute top-3 right-3"></button>
         <div className="text-white flex flex-col md:gap-5 gap-2 w-full p-3 items-center">
           <Loading loading={loading}>
             {!profileData ? (
@@ -51,6 +40,9 @@ const ProfileData: React.FC = () => {
                 <h1 className="text-3xl w-100 flex justify-center">
                   {profileData?.displayName}
                 </h1>
+                <Link to={`/chat/${profileData.userId}`} className="absolute right-5 text-2xl hover:scale-110 transition-all ease-in-out delay-10">
+                  <BsFillChatDotsFill />
+                </Link>
                 <img src={profileData?.avatar} className=" w-32 rounded-full" />
                 <div className="flex flex-col items-center gap-1">
                   <h3 className="font-extrabold text-secondary">Email</h3>
@@ -62,21 +54,7 @@ const ProfileData: React.FC = () => {
                   <h2>{profileData?.displayName}</h2>
                 </div>
                 <hr className="w-full" />
-                <div className="flex flex-col items-center gap-1 h-full">
-                  <h3 className="font-extrabold text-secondary">Friends</h3>
-                  <div className="w-full flex flex-col h-full overflow-y-auto">
-                    {profileData?.friends.length! > 0 ? (
-                      profileData?.friends.map((item: IUserBody) => (
-                        <UserResult item={item} />
-                      ))
-                    ) : (
-                      <div className="gap-4 w-full flex flex-col items-center justify-center h-full justify-center">
-                        <FaSadTear fontSize={32} />
-                        <h3>User has no friend yet!</h3>
-                      </div>
-                    )}
-                  </div>
-                </div>
+                <div className="flex flex-col items-center gap-1 h-full"></div>
               </>
             )}
           </Loading>

@@ -51,8 +51,7 @@ export const userSignIn = createAsyncThunk(
         userId: data.data.userId,
         avatar: data.data.avatar,
         email: data.data.email,
-        displayName: data.data.displayName,
-        friends: data.data.friends,
+        displayName: data.data.displayName,        
       };
       return returnData as IUserBody;
     } catch (error) {}
@@ -93,10 +92,7 @@ const userSlice = createSlice({
     },
     signOutAction: (state, action: PayloadAction<undefined>) => {
       state.data = null;
-    },
-    addFriend: (state, action: PayloadAction<IUserBody>) => {
-      state.data?.friends.push(action.payload);
-    },
+    },    
   },
   extraReducers: (builder) => {
     builder.addCase(userSignIn.pending, (state, action) => {
@@ -126,6 +122,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { signInAction, signOutAction, addFriend } = userSlice.actions;
+export const { signInAction, signOutAction} = userSlice.actions;
 // Other code such as selectors can use the imported `RootState` type
 export default userSlice.reducer;
