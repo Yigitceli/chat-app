@@ -15,8 +15,13 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    
   },
   "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }]
+  "references": [{ "path": "./tsconfig.node.json" }],
+  "typeRoots": [
+    "../node_modules/@types",
+    "../@types"
+  ]
 }

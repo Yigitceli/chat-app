@@ -36,7 +36,7 @@ const ProtectedRouter = () => {
             {chatsData.data?.map((item) => {
               return (
                 <Link to={`/chat/${findOther(item, data.data).userId}`}>
-                  <button className="text-secondary font-bold bg-main p-2 rounded-md hover:scale-105 w-full flex items-center gap-4">
+                  <button className="text-secondary font-bold bg-main p-2 rounded-md hover:scale-95 w-full flex items-center gap-4">
                     <img
                       src={findOther(item, data.data)?.avatar}
                       className="w-10 rounded-full"
