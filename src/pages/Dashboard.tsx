@@ -11,7 +11,9 @@ import {
 import Search from "./Search";
 import axios from "../axios";
 import { setData } from "../redux/chatSlice";
-import { fetchChats } from "../redux/chatsSlice";
+import { fetchChats, recieveMsg } from "../redux/chatsSlice";
+import { io } from "socket.io-client";
+export const socket = io("http://localhost:5000");
 
 const active = "top-0 md:hidden flex h-full absolute items-center right-0";
 const disActive =
@@ -23,8 +25,20 @@ const Dashboard = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if (data?.userId) {
+      socket.on("connect", () => {
+        socket.emit("joined", { userId: data?.userId });
+      });
+    }
+  }, [data]);
+
+  useEffect(() => {
     dispatch(fetchChats());
   }, []);
+
+  socket.on("recieveMessage", ({ newChat }) => {
+    dispatch(recieveMsg(newChat));
+  });
 
   return (
     <>

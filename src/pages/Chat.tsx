@@ -2,12 +2,13 @@ import axios from "../axios";
 import React, { useEffect, useState } from "react";
 import { IoIosSend } from "react-icons/io";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
 import { useParams } from "react-router-dom";
 import { IChat, IPersonChat } from "../redux/chatsSlice";
 import { IUserBody } from "./Login";
 import InputEmoji from "react-input-emoji";
+import { socket } from "./Dashboard";
 
 type FormValues = {
   chat: string;
@@ -33,17 +34,18 @@ const findUser = (
 
 function Chat() {
   const [text, setText] = useState<string>("");
-
+  const dispatch = useDispatch();
   async function handleOnEnter(text: string) {
-    const response = await axios.put(`/chat/${params.id}`, {
+    socket.emit("sendMessage", {
+      chatUserId: params.id,
+      user: user.data,
       chatText: text,
-    });
+    });    
   }
   const { data } = useSelector((state: RootState) => state.chats);
+  const user = useSelector((state: RootState) => state.user);
   let params = useParams();
-  useEffect(() => {
-    findChat(params.id, data);
-  }, [params, data]);
+  useEffect(() => {}, [params, data]);
 
   return (
     <div className="relative bg-main flex flex-col w-full h-full rounded-md">

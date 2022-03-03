@@ -45,9 +45,13 @@ const ProtectedRouter = () => {
                       <p className="text-white">
                         {findOther(item, data.data)?.displayName}
                       </p>
-                      <p>
-                        {item.chats[item.chats.length - 1].chat.slice(0, 15)}...
-                      </p>
+                      {item.chats[item.chats.length - 1].chat.length >= 15 ? (
+                        <p>
+                          {item.chats[item.chats.length - 1].chat.slice(0, 15)}
+                        </p>
+                      ) : (
+                        item.chats[item.chats.length - 1].chat
+                      )}
                     </div>
                   </button>
                 </Link>

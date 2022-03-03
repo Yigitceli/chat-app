@@ -10,6 +10,7 @@ export interface IPersonChat {
 }
 
 export interface IChat {
+  _id: string;
   users: IUserBody[];
   chats: IPersonChat[];
 }
@@ -34,7 +35,20 @@ const initialState: IChatsState = {
 const chatsSlice = createSlice({
   name: "chats",
   initialState,
-  reducers: {},
+  reducers: {
+    recieveMsg: (state, action: PayloadAction<IChat>) => {
+      const chatIndex = state.data?.findIndex(
+        (item: IChat) => item._id == action.payload._id
+      );
+      if (chatIndex != -1 || chatIndex) {
+        state.data![chatIndex!].chats.push(
+          action.payload.chats[action.payload.chats.length - 1]
+        );
+      } else {
+        state.data?.push(action.payload);
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(fetchChats.pending, (state, action) => {
       state.loading = "pending";
@@ -51,4 +65,5 @@ const chatsSlice = createSlice({
   },
 });
 
+export const { recieveMsg } = chatsSlice.actions;
 export default chatsSlice.reducer;

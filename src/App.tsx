@@ -1,28 +1,26 @@
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar";
-import Dashboard from "./pages/Dashboard";
+import Dashboard, { socket } from "./pages/Dashboard";
 import Login from "./pages/Login";
 import ProfileData from "./pages/ProfileData";
 import Register from "./pages/Register";
 import Search from "./pages/Search";
 import CheckProtectRouter from "./services/CheckProtectRoute";
 import ProtectedRouter from "./services/ProtectedRoutes";
-import { io } from "socket.io-client";
-const socket = io("http://localhost:5000");
 
 import { RootState } from "./store";
 import Chat from "./pages/Chat";
+
 
 export default function App() {
   const { data } = useSelector((state: RootState) => state.user);
 
   useEffect(() => {
-    socket.on("connect", () => {
-      console.log(socket.connected);
-    });
+    
   }, []);
+ 
 
   return (
     <BrowserRouter>
