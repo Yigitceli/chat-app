@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { Link, Navigate, Outlet } from "react-router-dom";
@@ -13,14 +13,18 @@ const findOther = (item: IChat, mainUser: IUserBody | null): IUserBody => {
   return result!;
 };
 
-const ProtectedRouter = () => {
+interface IProps {
+  setIsOpen: (e: boolean) => void;
+}
+
+const ProtectedRouter:React.FC<IProps> = ({ setIsOpen }) => {  
   const data = useSelector((state: RootState) => state.user);
   const chatsData = useSelector((state: RootState) => state.chats);
   const isLoggedIn: boolean = !!data.data;
   return isLoggedIn ? (
     <div className="overflow-hidden w-full h-full flex flex-1 px-1 xl:px-[20rem] py-2 bg-main">
-      <div className="w-full rounded-md flex">
-        <div className="bg-layout w-2/6 h-full border-r-2 border-main rounded-tl-md rounded-bl-md">
+      <div className="w-full relative rounded-md flex">
+        <div className="bg-layout rounded-md w-full md:w-2/6 h-full border-r-2 border-main rounded-tl-md rounded-bl-md">
           <div className="flex flex-col items-center">
             <div className="text-white flex gap-2 items-center w-full justify-evenly p-3 focus:outline-none">
               <input
@@ -35,7 +39,7 @@ const ProtectedRouter = () => {
           <div className="w-full p-1 px-2 ">
             {chatsData.data?.map((item) => {
               return (
-                <Link to={`/chat/${findOther(item, data.data).userId}`}>
+                <Link to={`/chat/${findOther(item, data.data).userId}`} onClick={(e) => setIsOpen(true)}>
                   <button className="text-secondary font-bold bg-main p-2 rounded-md hover:scale-95 w-full flex items-center gap-4">
                     <img
                       src={findOther(item, data.data)?.avatar}
@@ -47,7 +51,8 @@ const ProtectedRouter = () => {
                       </p>
                       {item.chats[item.chats.length - 1].chat.length >= 15 ? (
                         <p>
-                          {item.chats[item.chats.length - 1].chat.slice(0, 15)}...
+                          {item.chats[item.chats.length - 1].chat.slice(0, 15)}
+                          ...
                         </p>
                       ) : (
                         item.chats[item.chats.length - 1].chat

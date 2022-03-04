@@ -26,12 +26,10 @@ const Search = () => {
 
   return (
     <>
-      <div className="text-white text-4xl flex w-full justify-between items-center">
-        <CgLayoutList cursor={"pointer"} className="hover:scale-125" />
+      <div className="text-white text-4xl flex w-full justify-between items-center">        
         <h2 className="text-2xl text-white font-bold w-full flex justify-center items-center">
           Search Results
-        </h2>
-        <CgLayoutGridSmall cursor={"pointer"} className="hover:scale-125" />
+        </h2>       
       </div>
 
       <div className="overflow-y-auto h-full flex flex-col md:py-2 md:px-1 p-2 gap-4 w-full">

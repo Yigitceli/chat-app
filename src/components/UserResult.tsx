@@ -22,16 +22,17 @@ const UserResult: React.FC<IProps> = ({ item }) => {
         <div
           onClick={(e) => dispatch(setProfileData(item))}
           className="hover:scale-95 cursor-pointer text-white w-full rounded-lg p-4 bg-main flex justify-between items-center h-28"
-         
         >
           <img src={item.avatar} className="w-24 rounded-full" />
-          <div className="flex flex-col items-center">
-            <h3 className="text-secondary font-extrabold">Email</h3>
-            <h2>{item.email}</h2>
-          </div>
-          <div className="flex flex-col items-center">
-            <h3 className="text-secondary font-extrabold">Name</h3>
-            <h2>{item.displayName}</h2>
+          <div className="md:flex w-full justify-evenly">
+            <div className="flex flex-col items-center">
+              <h3 className="text-secondary font-extrabold">Email</h3>
+              <h2>{item.email}</h2>
+            </div>
+            <div className="flex flex-col items-center">
+              <h3 className="text-secondary font-extrabold">Name</h3>
+              <h2>{item.displayName}</h2>
+            </div>
           </div>
         </div>
       </Link>

@@ -26,7 +26,11 @@ import { signOutAction } from "../redux/userSlice";
 const withUser = `relative z-50 w-full flex items-center justify-between px-5 lg:px-13 py-3 bg-main backdrop-blur-sm`;
 const withoutUser = `w-full flex items-center justify-center px-5 lg:px-13 py-3 bg-main backdrop-blur-sm`;
 
-export default function Navbar() {
+interface IProps {
+  setIsOpen: (e: boolean) => void;
+}
+
+const Navbar: React.FC<IProps> = ({ setIsOpen }) => {
   const ref = useRef(null);
   const [searchValue, setSearchValue] = useState<string>("");
   const [searchResult, setSearchResult] = useState<IUserBody[] | null>(null);
@@ -60,7 +64,6 @@ export default function Navbar() {
 
   const changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(event.target.value);
-
   };
 
   const fetchSearchResult = async () => {
@@ -83,19 +86,26 @@ export default function Navbar() {
     e.preventDefault();
     navigate(`/search?value=${searchValue}`);
     setSearchResult(null);
+    setIsOpen(true);
+  };
+
+  const clickHandler = () => {
+    setIsOpen(false);
+    navigate("/");
   };
 
   return (
     <div className={data.data ? withUser : withoutUser}>
-      <Link to={"/"}>
-        <div className="cursor-pointer flex items-center gap-1 hover:text-stone-400 text-white">
-          <IoLogoSnapchat fontSize={35} />
-          <h3>Chatlify</h3>
-        </div>
-      </Link>
+      <button
+        onClick={clickHandler}
+        className="flex items-center gap-1 hover:text-stone-400 text-white"
+      >
+        <IoLogoSnapchat fontSize={35} />
+        <h3>Chatlify</h3>
+      </button>
 
       {data.data && (
-        <ul className="flex gap-8 text-stone-400 font-bold items-center">
+        <ul className="flex gap-3 md:gap-8 text-stone-400 font-bold items-center">
           <div className="relative flex flex-col">
             <form
               onSubmit={FormSubmitHandler}
@@ -120,13 +130,6 @@ export default function Navbar() {
               />
             )}
           </div>
-
-          <span className="relative inline-block cursor-pointer hover:text-secondary">
-            <RiNotification2Line className="text-2xl" />
-            <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
-              99
-            </span>
-          </span>
           <div className="relative">
             <img
               className="rounded-full w-11 cursor-pointer hover:scale-110"
@@ -164,4 +167,5 @@ export default function Navbar() {
       )}
     </div>
   );
-}
+};
+export default Navbar;
