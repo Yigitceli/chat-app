@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { IUserBody } from "../pages/Login";
+import { IChat } from "./chatsSlice";
 
 interface IPersonChat {
   user: IChatBody;
@@ -8,14 +9,12 @@ interface IPersonChat {
 }
 
 interface IChatBody {
-  data: {
-    userData?: IUserBody;
-    chatData?: IPersonChat[];
-  };
+  data: IChat | undefined;
+  
 }
 
 const initialState: IChatBody = {
-  data: {},
+  data: undefined,  
 };
 
 const chatSlice = createSlice({

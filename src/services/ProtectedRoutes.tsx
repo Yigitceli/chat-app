@@ -47,7 +47,7 @@ const ProtectedRouter = () => {
                       </p>
                       {item.chats[item.chats.length - 1].chat.length >= 15 ? (
                         <p>
-                          {item.chats[item.chats.length - 1].chat.slice(0, 15)}
+                          {item.chats[item.chats.length - 1].chat.slice(0, 15)}...
                         </p>
                       ) : (
                         item.chats[item.chats.length - 1].chat

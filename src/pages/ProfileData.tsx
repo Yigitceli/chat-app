@@ -24,7 +24,9 @@ const ProfileData: React.FC = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchUser(searchParams.get("id")));
+    if (searchParams.get("id")) {
+      dispatch(fetchUser(searchParams.get("id")));
+    }
   }, [searchParams]);
 
   return (
@@ -40,7 +42,11 @@ const ProfileData: React.FC = () => {
                 <h1 className="text-3xl w-100 flex justify-center">
                   {profileData?.displayName}
                 </h1>
-                <Link to={`/chat/${profileData.userId}`} className="absolute right-5 text-2xl hover:scale-110 transition-all ease-in-out delay-10">
+                <Link
+                  to={`/chat/${profileData.userId}`}
+                  state={profileData}
+                  className="absolute right-5 text-2xl hover:scale-110 transition-all ease-in-out delay-10"
+                >
                   <BsFillChatDotsFill />
                 </Link>
                 <img src={profileData?.avatar} className=" w-32 rounded-full" />

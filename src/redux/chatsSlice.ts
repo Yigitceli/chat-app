@@ -40,7 +40,8 @@ const chatsSlice = createSlice({
       const chatIndex = state.data?.findIndex(
         (item: IChat) => item._id == action.payload._id
       );
-      if (chatIndex != -1 || chatIndex) {
+
+      if (chatIndex != -1) {
         state.data![chatIndex!].chats.push(
           action.payload.chats[action.payload.chats.length - 1]
         );
@@ -48,6 +49,7 @@ const chatsSlice = createSlice({
         state.data?.push(action.payload);
       }
     },
+    
   },
   extraReducers: (builder) => {
     builder.addCase(fetchChats.pending, (state, action) => {

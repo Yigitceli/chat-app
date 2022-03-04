@@ -40,6 +40,8 @@ const Dashboard = () => {
     dispatch(recieveMsg(newChat));
   });
 
+  
+
   return (
     <>
       <div className="w-4/6 md:w2/4 rounded-tr-md rounded-br-md  h-full border-r-2 border-main p-2 bg-layout">
