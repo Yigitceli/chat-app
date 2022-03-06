@@ -97,7 +97,7 @@ function Chat() {
         </h2>
       </div>
       <hr className="w-full" />
-      {/*Final Touch*/}
+     
       <div className="w-full flex flex-[100rem] h-96 flex overflow-auto py-6 px-5 flex-auto flex-col gap-2">
         {chatData.data?.chats.map((item: IPersonChat) => {
           return (
