@@ -146,15 +146,7 @@ export default function Login() {
             className="bg-white w-full flex items-center justify-center p-2 rounded-full"
           >
             <FcGoogle fontSize={24} />
-          </button>
-          <button
-            onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) =>
-              signIn("twitter")
-            }
-            className="bg-black w-full flex items-center justify-center p-2 rounded-full"
-          >
-            <BsTwitter fontSize={24} color="white" />
-          </button>
+          </button>          
         </div>
       </div>
     </div>
