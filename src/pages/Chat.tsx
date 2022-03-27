@@ -35,6 +35,7 @@ const findUser = (
 };
 
 function Chat() {
+  const ref = React.useRef<HTMLDivElement>(null);
   const [text, setText] = useState<string>("");
   const dispatch = useDispatch();
   async function handleOnEnter(text: string) {
@@ -67,6 +68,18 @@ function Chat() {
   }, [text]);
 
   useEffect(() => {
+    if (ref && ref.current) {
+      const element = ref.current;
+      element.scroll({
+        top: element.scrollHeight,
+        left: 0,       
+      });
+    }
+  }, [ref, chatData]);
+
+  useEffect(() => {}, [params, data, location]);
+
+  useEffect(() => {
     if (findChat(params.id, data)) {
       dispatch(setData(findChat(params.id, data)));
     }
@@ -97,8 +110,11 @@ function Chat() {
         </h2>
       </div>
       <hr className="w-full" />
-     
-      <div className="w-full flex flex-[100rem] h-96 flex overflow-auto py-6 px-5 flex-auto flex-col gap-2">
+
+      <div
+        ref={ref}
+        className="w-full flex flex-[100rem] h-96 flex overflow-auto py-6 px-5 flex-auto flex-col gap-2"
+      >
         {chatData.data?.chats.map((item: IPersonChat) => {
           return (
             <>
