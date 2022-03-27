@@ -1,20 +1,10 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { IoLogoSnapchat } from "react-icons/io";
 import { AiOutlineSearch } from "react-icons/ai";
-import { FcGoogle } from "react-icons/fc";
-import { signWithGoogle, signInWithTwitter } from "../../firebaseconfig";
-import { BsTwitter } from "react-icons/bs";
-import { getAuth, UserCredential } from "firebase/auth";
-import {
-  getAuthType,
-  setAccessToken,
-  setRefreshToken,
-  signout,
-} from "../services/authService";
+import { getAuth } from "firebase/auth";
+import { getAuthType, signout } from "../services/authService";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store";
-import { RiNotification2Line } from "react-icons/Ri";
-import { useForm } from "react-hook-form";
 import axios from "../axios";
 import SearchTab from "./SearchTab";
 import { IUserBody } from "../pages/Login";
