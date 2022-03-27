@@ -144,15 +144,6 @@ const Navbar: React.FC<IProps> = ({ setIsOpen }) => {
                 className="origin-top-right z-50 absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
               >
                 <div className="flex flex-col gap-1 w-full" role="none">
-                  <button className="flex justify-start rounded-sm w-full hover:text-white hover:bg-main text-gray-700 block px-4 py-2 text-sm">
-                    Account settings
-                  </button>
-                  <button className="flex justify-start rounded-sm w-full hover:text-white hover:bg-main text-gray-700 block px-4 py-2 text-sm">
-                    Support
-                  </button>
-                  <button className="flex justify-start rounded-sm w-full hover:text-white hover:bg-main text-gray-700 block px-4 py-2 text-sm">
-                    License
-                  </button>
                   <button
                     className="font-bold rounded-sm w-full hover:text-white hover:bg-main text-gray-700 block w-full text-left px-4 py-2 text-sm"
                     onClick={signOut}
