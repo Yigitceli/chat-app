@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { IUserBody } from "../pages/Login";
-import { MdMoreHoriz } from "react-icons/Md";
+import { CgMore } from "react-icons/Cg";
 import { useOnClickOutside } from "usehooks-ts";
 import { createSearchParams, Link, useNavigate } from "react-router-dom";
 interface IProps {
@@ -42,7 +42,7 @@ const SearchTab: React.FC<IProps> = ({
 
       <Link to={`/search?value=${value}`}>
         <span className="w-full flex justify-center cursor-pointer rounded-md hover:bg-main">
-          <MdMoreHoriz fontSize={24} />
+          <CgMore fontSize={24} />
         </span>
       </Link>
     </div>
