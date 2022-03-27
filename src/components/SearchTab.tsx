@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { IUserBody } from "../pages/Login";
+import { MdMoreHoriz } from "react-icons/Md";
 import { useOnClickOutside } from "usehooks-ts";
 import { createSearchParams, Link, useNavigate } from "react-router-dom";
 interface IProps {
@@ -9,13 +10,18 @@ interface IProps {
   setSearchValue: (e: string) => void;
 }
 
-const SearchTab: React.FC<IProps> = ({ data, setData, value, setSearchValue }) => {
+const SearchTab: React.FC<IProps> = ({
+  data,
+  setData,
+  value,
+  setSearchValue,
+}) => {
   const ref = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
 
   const handleClickOutside = () => {
     data && setData(null);
-    setSearchValue("")
+    setSearchValue("");
   };
 
   useOnClickOutside(ref, handleClickOutside);
@@ -24,8 +30,7 @@ const SearchTab: React.FC<IProps> = ({ data, setData, value, setSearchValue }) =
     <div
       ref={ref}
       className="bg-layout absolute z-50 gap-2 flex flex-col w-full rounded-md top-11 shadow-xl"
-      
-   >
+    >
       {data?.slice(0, 3).map((item) => (
         <Link to={`/user/${item.userId}`}>
           <span className="relative hover:bg-main py-1 rounded-md cursor-pointer flex items-center justify-evenly w-full">
@@ -37,7 +42,7 @@ const SearchTab: React.FC<IProps> = ({ data, setData, value, setSearchValue }) =
 
       <Link to={`/search?value=${value}`}>
         <span className="w-full flex justify-center cursor-pointer rounded-md hover:bg-main">
-          Show More
+          <MdMoreHoriz fontSize={24} />
         </span>
       </Link>
     </div>
