@@ -36,7 +36,7 @@ export const userSignIn = createAsyncThunk(
     try {
       setAuthType("custom");
       let response = await axios.post(
-        "http://localhost:5000/user/login",
+        "https://chatlify-yigit-backend.herokuapp.com/user/login",
         userData,
         {
           headers: {

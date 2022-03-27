@@ -34,7 +34,7 @@ export default function Register() {
   const FormSubmitHandler: SubmitHandler<FormValues> = async (
     data: FormValues
   ) => {
-    const response = await axios.post("http://localhost:5000/user/register", {
+    const response = await axios.post("https://chatlify-yigit-backend.herokuapp.com/user/register", {
       email: data.email,
       password: data.password,
       name: data.name,

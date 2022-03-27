@@ -7,7 +7,7 @@ import {
 } from "./services/authService";
 
 const instance = axios.create({
-  baseURL: "http://localhost:5000",
+  baseURL: "https://chatlify-yigit-backend.herokuapp.com",
   headers: {
     "Content-Type": "application/json",
   },
